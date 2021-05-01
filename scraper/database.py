@@ -3,6 +3,11 @@ import pymysql
 
 class QueryBuilder:
 
+    """
+        This class will handle the execution
+        of creating queries for the database
+    """
+
     def __init__(self):
         self.base_insert_query = 'INSERT INTO {0}({1}) VALUES({2});'
         self.base_select_query = 'SELECT {0} FROM {1} {2};'
@@ -18,20 +23,19 @@ class QueryBuilder:
             last item
         """
 
-        if last:
-            if value == 'CURRENT_DATE()':
-                return '{0}'.format(value)
-            elif type(value) == str:
-                return "'{0}'".format(value)
-            else:
-                return '{0}'.format(value)
+        result = ""
+
+        if value == 'CURRENT_DATE()':
+            result = '{0}'.format(value)
+        elif type(value) == str:
+            result = "'{0}'".format(value)
         else:
-            if value == 'CURRENT_DATE()':
-                return '{0},'.format(value)
-            elif type(value) == str:
-                return "'{0}',".format(value)
-            else:
-                return '{0},'.format(value)
+            result = '{0}'.format(value)
+
+        if not last:
+            result += ","
+
+        return result
 
     def build_select_query(self, table_name, all, *fields, **args):
         
@@ -44,7 +48,15 @@ class QueryBuilder:
             self.field += "*"
         else: 
             # build query here.
-            pass
+            self.rows = fields
+
+            dict_size, index = len(args.keys()), 1
+
+            for key, item in args.items():
+
+                if index == dict_size:
+                    self.field += "`{0}`".format(key)
+                    self.value += self.handle_value_for_query(item, False)
 
         return self.base_select_query.format(self.field, table_name, self.value)
 
@@ -92,6 +104,11 @@ class QueryBuilder:
 
 
 class DatabaseHelper:
+
+    """
+        This class handle execution of 
+        operations of database
+    """
 
     def __init__(self, user, password, host, db):
         self.connection = None
