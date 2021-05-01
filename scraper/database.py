@@ -1,7 +1,7 @@
 import pymysql
 
 
-class db_builder:
+class QueryBuilder:
 
     def __init__(self):
         self.base_insert_query = 'INSERT INTO {0}({1}) VALUES({2});'
@@ -14,7 +14,8 @@ class db_builder:
 
         """
             This method will decide the type of values
-            to put under quotes
+            to put under quotes as well handle the 
+            last item
         """
 
         if last:
@@ -36,7 +37,7 @@ class db_builder:
         
         """
             This method will build a select 
-            query for the db
+            dynamically query for the db
         """
 
         if all:
@@ -74,7 +75,7 @@ class db_builder:
     def build_insert_multiple_query(self, table_name, rows):
 
         """
-            This table will build an insert query to
+            This table will build an query to
             insert multiple rows
         """
         pass
@@ -90,7 +91,7 @@ class db_builder:
         pass
 
 
-class db_helper:
+class DatabaseHelper:
 
     def __init__(self, user, password, host, db):
         self.connection = None
@@ -100,6 +101,11 @@ class db_helper:
         self.password = password
 
     def execute_get_query(self, query):
+
+        """
+            This method will fetch all 
+            the items from the db
+        """
 
         try:
             self.connection = pymysql.connect(
@@ -123,6 +129,12 @@ class db_helper:
             self.connection.close()
 
     def execute_insert(self, query):
+
+        """
+            This method will insert
+            records into the database
+        """
+
         try:
             self.connection = pymysql.connect(
                 host=self.host,
@@ -133,9 +145,8 @@ class db_helper:
             
             cursor = self.connection.cursor()
             cursor.execute(query)
-            self.connection.commit()
-
-            self.connection.close()
+            self.connection.commit() # commit the query
+            self.connection.close() # close connection
 
         except Exception:
 

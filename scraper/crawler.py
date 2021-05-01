@@ -4,22 +4,22 @@ import json
 import re
 
 from database import (
-    db_helper,
-    db_builder,
+    QueryBuilder,
+    DatabaseHelper,
 )
 
 from product import (
-    product
+    ProductLink
 )
 
-class crawler:
+class Crawler:
 
     def __init__(self):
 
-        self.product = product()
+        self.product = ProductLink()
 
-        self.builder = db_builder()
-        self.helper = db_helper('root', '', '127.0.0.1', 'scrapper')
+        self.builder = QueryBuilder()
+        self.helper = DatabaseHelper('root', '', '127.0.0.1', 'scrapper')
 
         self.amazon_tag_names = {
             'name_tag': {
@@ -47,10 +47,6 @@ class crawler:
         self.flipkart_tag_names = {
 
         }
-
-    def strip_url(self, url):
-        name = url.split(".")
-        return name[1], url
 
     def clean_price(self, price):
 
