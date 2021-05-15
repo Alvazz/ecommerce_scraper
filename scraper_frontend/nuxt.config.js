@@ -32,11 +32,12 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    'bootstrap-vue/nuxt',
   ],
+
+  auth: {},
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
