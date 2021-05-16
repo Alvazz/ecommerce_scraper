@@ -7,8 +7,6 @@ module.exports = async (req, res, next) => {
     const { authorization } = req.headers;
     const validToken = await verifyToken(authorization);
 
-    console.log(validToken);
-
     if (validToken.id) {
 
       req.user = { id: validToken.id };
