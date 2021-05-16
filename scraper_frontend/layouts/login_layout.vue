@@ -5,9 +5,14 @@
 </template>
 
 <script>
-
 export default {
-  middleware: "auth",
-}
 
+    name: "login_layout",
+    middleware: "unauth_redirect",
+
+}
 </script>
+
+<style>
+
+</style>

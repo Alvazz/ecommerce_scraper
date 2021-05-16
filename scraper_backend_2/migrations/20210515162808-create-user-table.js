@@ -22,6 +22,7 @@ exports.up = function (db) {
     first_name: { type: DB_TYPE.STRING, notNull: true },
     last_name: { type: DB_TYPE.STRING, notNull: true },
     email: { type: DB_TYPE.STRING, notNull: true },
+    password: { type: DB_TYPE.STRING, notNull: true },
     phone: { type: DB_TYPE.STRING, notNull: false },
     is_active: { type: DB_TYPE.BOOLEAN, defaultValue: false },
   });

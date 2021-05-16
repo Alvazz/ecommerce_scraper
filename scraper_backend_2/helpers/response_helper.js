@@ -1,10 +1,13 @@
-const statusCode = require("../config/constant");
+const statusCode = require("../config/status_code");
 
 module.exports = (response, code, data) => {
 
+  // get the code 
   const statusFound = statusCode[code];
+
+  // pass the code with the response
   return data ? 
-    response.status(statusCode.status_code).json(statusFound, { data: data }) : 
-    response.status(statusCode.status_code).json(statusFound);
+    response.status(statusFound.status_code).json({ status: statusFound, data }) : 
+    response.status(statusFound.status_code).json({ status: statusFound });
 
 };

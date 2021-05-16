@@ -3,14 +3,6 @@ export default {
   namespace: true,
 
   state: {
-    loginResponse: {
-      'message': '',
-      'type': '',
-      'errors': {
-        'email': '',
-        'password': ''
-      }
-    },
   },
 
   getters: {
@@ -21,13 +13,31 @@ export default {
 
   actions: {
     async loginUser({ commit }, loginModel) {
-      console.log(loginModel);
+      try {
+
+        const response = await this.$auth.loginWith('local', { data: loginModel });
+        console.log(response);
+
+      } catch (ex) {
+
+        if (ex.response) {
+          if (ex.response.data.status) {
+            console.log(ex.response.data.status.message);
+          } else {
+            console.log(ex.response.data);
+          }
+        } else {
+          console.log(ex.message);
+        }
+
+      }
+    },
+
+    async registerUser({ commit }, registerModel) {
+
     },
   },
 
-  mutations: {
-    SET_LOGIN_RESPONSE(state, value) {
-      state.loginResponse = value;
-    },
-  }
+  mutations: {},
+
 };

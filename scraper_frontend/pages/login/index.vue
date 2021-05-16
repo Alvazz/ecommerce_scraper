@@ -39,6 +39,8 @@ export default {
 
   name: "Login",
 
+  layout: "login_layout",
+
   data() {
     return {
 

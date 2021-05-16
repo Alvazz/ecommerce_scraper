@@ -23,6 +23,10 @@ const Users = sequelize.define(DB_TABLES.USERS, {
     allowNull: false,
     unique: true,
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   phone: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -32,7 +36,11 @@ const Users = sequelize.define(DB_TABLES.USERS, {
     allowNull: true,
   },
 }, {
-  tableName: DB_TABLES.USERS
+  timestamps: false,
+  tableName: DB_TABLES.USERS,
 });
+
+const UserVerification = require("./user_verification");
+UserVerification.belongsTo(Users, { foreignKey: "user_id" });
 
 module.exports = Users;

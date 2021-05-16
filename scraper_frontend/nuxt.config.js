@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -33,14 +35,36 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     '@nuxtjs/pwa',
     'bootstrap-vue/nuxt',
   ],
 
-  auth: {},
+  auth: {
+    strategies: {
+      local: {
+
+        endpoints: {
+          login: { url: "/auth/login", methods: "post", propertyName: "data.token" },
+          logout: false,
+          user: { url: "/auth/user", method: "get", propertyName: "data.user" }
+        },
+
+        tokenRequired: true,
+        tokenType: null,
+      }
+    },
+
+    redirect: {
+      login: "/login",
+      logout: "/login"
+    },
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.API_URL,
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

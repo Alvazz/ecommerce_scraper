@@ -23,5 +23,6 @@ module.exports = {
 
   DB_TABLES: {
     USERS: 'users',
+    USER_VERIFICATION: 'user_verification',
   },
 };
