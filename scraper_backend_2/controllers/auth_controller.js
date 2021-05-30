@@ -51,6 +51,13 @@ const loginUser = async (req, res) => {
   }
 };
 
+/**
+ * User registraton
+ * @param {*} req 
+ * @param {*} res 
+ * @constructor
+ * @returns 
+ */
 const registerUser = async (req, res) => {
   try {
 
@@ -107,6 +114,7 @@ const registerUser = async (req, res) => {
  * Verify user to after otp validation
  * @param {*} req 
  * @param {*} res 
+ * @constructor
  */
 const verifyUser = async (req, res) => {
   try {
