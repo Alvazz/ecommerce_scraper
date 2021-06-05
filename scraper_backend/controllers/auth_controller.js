@@ -10,6 +10,13 @@ const {
   generateOTP,
 } = require("../helpers/auth_helper");
 
+/**
+ * Handle user login 
+ * @param {*} req 
+ * @param {*} res 
+ * @constructor
+ * @returns { Promise } 
+ */
 const loginUser = async (req, res) => {
   try {
 
@@ -56,7 +63,7 @@ const loginUser = async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  * @constructor
- * @returns 
+ * @returns { Promise }
  */
 const registerUser = async (req, res) => {
   try {
@@ -115,6 +122,7 @@ const registerUser = async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  * @constructor
+ * @returns { Promise }
  */
 const verifyUser = async (req, res) => {
   try {
@@ -180,6 +188,13 @@ const verifyUser = async (req, res) => {
   }
 };
 
+/**
+ * Send verification to user
+ * @constructor
+ * @param {*} req 
+ * @param {*} res 
+ * @returns { Promise }
+ */
 const sendVerification = async (req, res) => {
 
   try {
@@ -218,6 +233,13 @@ const sendVerification = async (req, res) => {
 
 };
 
+/**
+ * Get user details
+ * @constructor
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const userDetails = async (req, res) => {
   
   try {
