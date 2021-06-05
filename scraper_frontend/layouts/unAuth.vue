@@ -9,7 +9,3 @@ export default {
   name: "unAuth"
 }
 </script>
-
-<style scoped>
-
-</style>
