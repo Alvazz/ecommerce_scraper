@@ -190,9 +190,9 @@ const verifyUser = async (req, res) => {
 
 /**
  * Send verification to user
- * @constructor
  * @param {*} req 
  * @param {*} res 
+ * @constructor
  * @returns { Promise }
  */
 const sendVerification = async (req, res) => {
@@ -235,9 +235,9 @@ const sendVerification = async (req, res) => {
 
 /**
  * Get user details
- * @constructor
  * @param {*} req 
  * @param {*} res 
+ * @constructor
  * @returns 
  */
 const userDetails = async (req, res) => {
@@ -249,7 +249,11 @@ const userDetails = async (req, res) => {
     const userDetails = await User.findOne({
       where: { id },
       raw: true,
-      attributes: ['id', 'first_name', 'last_name', 'email', 'phone'],
+      attributes: [
+        'id', 
+        'first_name', 'last_name', 
+        'email', 'phone',
+      ],
     });
 
     return responseHelper(res, "USER200", { user: userDetails });

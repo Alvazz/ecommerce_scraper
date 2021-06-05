@@ -10,13 +10,9 @@ const {
 
 // Post requests
 router.post("/login", login_validation.body, auth_controller.loginUser);
-
 router.post("/register", register_validation.body, auth_controller.registerUser);
-
 router.post("/verify", auth_controller.verifyUser);
-
 router.post("/resend_otp", auth_controller.sendVerification);
-
 
 // Get requests
 router.get("/user", authMiddleware, auth_controller.userDetails);

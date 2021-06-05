@@ -1,6 +1,13 @@
 const { verifyToken } = require("../helpers/auth_helper");
 const responseHelper = require("../helpers/response_helper");
 
+/**
+ * Validate token for user 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns { Promise } 
+ */
 module.exports = async (req, res, next) => {
   try {
 

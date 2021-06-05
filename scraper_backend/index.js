@@ -4,7 +4,7 @@ const cors = require("cors");
 const { PORT } = require("./config/env");
 const routes = require("./routes");
 
-const routeLogger = require("./helpers/router_logger_helper");
+const routeLogger = require("./middlewares/router_logger_helper");
 
 const app = express();
 
