@@ -4,21 +4,34 @@
       <div class="col-lg-3"></div>
       <div class="col-lg-6 text-white">
         <v-card outlined>
-          <v-card-title>Sign In Here</v-card-title>
+          <v-card-title>Sign Up Here</v-card-title>
           <v-divider class="mx-4"></v-divider>
           <v-container>
             <form>
               <v-form>
                 <v-text-field
+                  v-model="registerModel.firstName"
+                  label="First Name"
+                  color="error"
+                ></v-text-field>
+
+                <v-text-field
+                  v-model="registerModel.lastName"
+                  label="Last Name"
+                  required
+                  color="error"
+                ></v-text-field>
+
+                <v-text-field
                   type="email"
-                  v-model="loginModel.email"
+                  v-model="registerModel.email"
                   label="E-mail"
                   required
                   color="error"
                 ></v-text-field>
 
                 <v-text-field
-                  v-model="loginModel.password"
+                  v-model="registerModel.password"
                   label="Password"
                   required
                   color="error"
@@ -26,12 +39,12 @@
 
                 <v-btn
                   type="button"
-                  @click.prevent="onLogin"
+                  @click.prevent="onRegister"
                   block
                   depressed
                   color="error"
                 >
-                  Login
+                  Create an Account
                 </v-btn>
               </v-form>
             </form>
@@ -41,13 +54,13 @@
         <v-container>
           <div class="row">
             <div class="col-lg-6">
-              <v-btn elevation="2" outlined raised @click="forgotPassword">
-                Forgot Password?
+              <v-btn elevation="2" outlined raised @click="verifyAccount">
+                Verify Account
               </v-btn>
             </div>
             <div class="col-lg-6 pull-right">
-              <v-btn elevation="2" outlined raised @click="goToRegister">
-                Not an User? Register Here
+              <v-btn elevation="2" outlined raised @click="goToLogin">
+                Already User? Login Here
               </v-btn>
             </div>
           </div>
@@ -59,14 +72,16 @@
 
 <script>
 export default {
-  name: "login",
+  name: "register",
   layout: "unAuth",
 
   data() {
     return {
       loading: false,
 
-      loginModel: {
+      registerModel: {
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
       },
@@ -74,14 +89,14 @@ export default {
   },
 
   methods: {
-    onLogin() {
-      console.log(this.loginModel);
+    verifyAccount() {},
+
+    onRegister() {
+      console.log(this.registerModel);
     },
 
-    forgotPassword() {},
-
-    goToRegister() {
-      this.$router.push({ path: "/register" });
+    goToLogin() {
+      this.$router.push({ path: "/login" });
     },
   },
 };
