@@ -161,7 +161,6 @@ const verifyUser = async (req, res) => {
     }
 
     // Revoke all otp and verify user.
-
     const revokeOtp = UserVerification.update({
       is_revoked: true,
     }, {
@@ -204,10 +203,14 @@ const sendVerification = async (req, res) => {
     const userExists = await User.findOne({
       where: { email },
       raw: true,
-      attributes: ['id']
+      attributes: ['id', 'is_active']
     });
 
     if (!userExists) {
+      return responseHelper(res, "USER404");
+    }
+
+    if (userExists && userExists.is_active) {
       return responseHelper(res, "USER404");
     }
 
