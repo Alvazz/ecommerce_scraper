@@ -238,7 +238,7 @@ const sendVerification = async (req, res) => {
  * @param {*} req 
  * @param {*} res 
  * @constructor
- * @returns 
+ * @returns { Promise } 
  */
 const userDetails = async (req, res) => {
   
