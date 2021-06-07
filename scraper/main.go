@@ -1,48 +1,21 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
-
-	"scraper/main/helpers"
-	"scraper/main/models"
+	"log"
+	"scraper/main/routes"
 
 	_ "github.com/go-sql-driver/mysql"
+
+	"net/http"
 )
 
 func main() {
 
-	db, err := sql.Open("mysql", "root:@/scraper")
+	r := routes.GoRoutes()
 
-	if err != nil {
-		panic(err.Error())
-	}
+	port := "8000"
+	fmt.Println("Server running on port", port)
+	log.Fatal(http.ListenAndServe(":"+port, &r))
 
-	db.SetMaxOpenConns(10)
-	db.SetMaxIdleConns(10)
-
-	defer db.Close()
-
-	results, err := db.Query("SELECT url FROM link")
-	if err != nil {
-		panic(err.Error())
-	}
-
-	var links []string
-
-	defer results.Close()
-
-	for results.Next() {
-		var link models.Link
-		err := results.Scan(&link.Url)
-		if err != nil {
-			panic(err.Error())
-		}
-		links = append(links, link.Url)
-	}
-
-	for _, link := range links {
-		product := helpers.ScrapeAmazon(link)
-		fmt.Println(product)
-	}
 }
