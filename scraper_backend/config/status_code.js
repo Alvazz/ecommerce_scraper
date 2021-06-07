@@ -66,6 +66,11 @@ module.exports = {
   },
 
   "LINK200": {
+    "message": "Link fetched successfully",
+    "status_code": 200,
+  },
+
+  "LINK201": {
     "message": "Link saved successfully",
     "status_code": 200,
   }

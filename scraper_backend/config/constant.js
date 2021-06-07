@@ -25,5 +25,7 @@ module.exports = {
     USERS: 'users',
     USER_VERIFICATION: 'user_verification',
     LINK: 'link',
+    PRODUCT: 'product',
+    CHOICE: 'choice'
   },
 };

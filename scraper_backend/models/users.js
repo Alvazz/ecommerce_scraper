@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/sequelize");
 
+const UserVerification = require("./user_verification");
+
 const { DB_TABLES } = require('../config/constant');
 
 const Users = sequelize.define(DB_TABLES.USERS, {
@@ -40,7 +42,6 @@ const Users = sequelize.define(DB_TABLES.USERS, {
   tableName: DB_TABLES.USERS,
 });
 
-const UserVerification = require("./user_verification");
 UserVerification.belongsTo(Users, { foreignKey: "user_id" });
 
 module.exports = Users;
