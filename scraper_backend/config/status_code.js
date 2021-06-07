@@ -64,4 +64,9 @@ module.exports = {
     "message": "Internal server error",
     "status_code": 500,
   },
+
+  "LINK200": {
+    "message": "Link saved successfully",
+    "status_code": 200,
+  }
 };

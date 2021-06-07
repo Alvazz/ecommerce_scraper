@@ -7,7 +7,7 @@ import (
 	"scraper/main/models"
 )
 
-func ScrapeAmazonController(w http.ResponseWriter, r *http.Request) {
+func ScraperAmazonController(w http.ResponseWriter, r *http.Request) {
 
 	decoder := json.NewDecoder(r.Body)
 
@@ -24,7 +24,9 @@ func ScrapeAmazonController(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err.Error())
 	}
+
 	w.Header().Add("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Write(b)
 
 }

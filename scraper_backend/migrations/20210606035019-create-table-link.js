@@ -23,11 +23,12 @@ exports.up = function(db) {
   return db.createTable(DB_TABLES.LINK, {
     id: { type: DB_TYPE.INTEGER, autoIncrement: true, primaryKey: true },
     url: { type: DB_TYPE.TEXT, notNull: true },
+    hit: { type: DB_TYPE.INTEGER, notNull: false, defaultValue: 1 },
   });
 };
 
 exports.down = function(db) {
-  return null;
+  return db.dropTable(DB_TABLES.LINK);
 };
 
 exports._meta = {

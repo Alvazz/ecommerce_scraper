@@ -26,12 +26,20 @@ func ScrapeAmazon(url string) models.Product {
 		productName = e.ChildText("span#productTitle")
 		productPrice = e.ChildText("span#priceblock_ourprice")
 
-		productName = strings.ReplaceAll(productName, "\n", "")
-
-		productPrice = strings.ReplaceAll(productPrice, "₹ ", "")
-		productPrice = strings.ReplaceAll(productPrice, ",", "")
-		var productPriceSplit []string = strings.Split(productPrice, ".")
-		productPrice = productPriceSplit[0]
+		if productPrice != "" {
+			productName = strings.ReplaceAll(productName, "\n", "")
+			productPrice = strings.ReplaceAll(productPrice, "₹ ", "")
+			productPrice = strings.ReplaceAll(productPrice, ",", "")
+			var productPriceSplit []string = strings.Split(productPrice, ".")
+			productPrice = productPriceSplit[0]
+		} else {
+			productPrice = e.ChildText("span#priceblock_dealprice")
+			productName = strings.ReplaceAll(productName, "\n", "")
+			productPrice = strings.ReplaceAll(productPrice, "₹ ", "")
+			productPrice = strings.ReplaceAll(productPrice, ",", "")
+			var productPriceSplit []string = strings.Split(productPrice, ".")
+			productPrice = productPriceSplit[0]
+		}
 
 		var siteList []string = strings.Split(url, "/")
 		siteName = siteList[2]

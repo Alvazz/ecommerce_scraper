@@ -10,7 +10,7 @@ func GoRoutes() mux.Router {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/scraper/scrape_amazon", controllers.ScrapeAmazonController).Methods("POST")
+	r.HandleFunc("/scraper/scrape_amazon", controllers.ScraperAmazonController).Methods("POST")
 
 	return *r
 

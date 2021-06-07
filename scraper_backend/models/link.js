@@ -9,9 +9,14 @@ const Link = sequelize.define(DB_TABLES.LINK, {
     autoIncrement: true,
     primaryKey: true,
   },
-  link: {
+  url: {
     type: DataTypes.TEXT,
     allowNull: false,
+  },
+  hit: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 1,
   },
 }, {
   timestamps: false,
