@@ -2,78 +2,47 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+
+	"scraper/main/helpers"
+	"scraper/main/models"
 
 	_ "github.com/go-sql-driver/mysql"
-
-	"fmt"
-	"strings"
-
-	"github.com/gocolly/colly"
 )
-
-type Product struct {
-	Name     string
-	Price    string
-	SiteName string
-	Url      string
-}
-
-func scrapeAmazon(c *colly.Collector, url string) Product {
-
-	var productName string
-	var productPrice string
-	var siteName string
-
-	c.OnHTML("div#dp-container", func(e *colly.HTMLElement) {
-
-		productName = e.ChildText("span#productTitle")
-		productPrice = e.ChildText("span#priceblock_ourprice")
-
-		productName = strings.ReplaceAll(productName, "\n", "")
-
-		productPrice = strings.ReplaceAll(productPrice, "₹ ", "")
-		productPrice = strings.ReplaceAll(productPrice, ",", "")
-		var productPriceSplit []string = strings.Split(productPrice, ".")
-		productPrice = productPriceSplit[0]
-
-		var siteList []string = strings.Split(url, "/")
-		siteName = siteList[2]
-
-	})
-
-	product := &Product{productName, productPrice, siteName, url}
-	fmt.Println(product)
-
-	return *product
-
-}
 
 func main() {
 
 	db, err := sql.Open("mysql", "root:@/scraper")
 
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
 
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(10)
 
-	fmt.Println(db)
+	defer db.Close()
 
-	var url string = "https://www.amazon.in/New-Apple-iPhone-11-64GB/dp/B08L89J9G3"
-	fmt.Println(url)
+	results, err := db.Query("SELECT url FROM link")
+	if err != nil {
+		panic(err.Error())
+	}
 
-	c := colly.NewCollector(
-		colly.UserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36"),
-	)
+	var links []string
 
-	scrapeAmazon(c, url)
+	defer results.Close()
 
-	c.OnRequest(func(r *colly.Request) {
-		fmt.Println("Visiting", r.URL)
-	})
+	for results.Next() {
+		var link models.Link
+		err := results.Scan(&link.Url)
+		if err != nil {
+			panic(err.Error())
+		}
+		links = append(links, link.Url)
+	}
 
-	c.Visit(url)
-
+	for _, link := range links {
+		product := helpers.ScrapeAmazon(link)
+		fmt.Println(product)
+	}
 }
