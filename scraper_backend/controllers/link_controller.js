@@ -1,10 +1,17 @@
 const { default: axios } = require("axios");
 const responseHelper = require("../helpers/response_helper");
-const Choice = require("../models/choice");
 
+const Choice = require("../models/choice");
 const Link = require("../models/link");
 const Product = require("../models/product");
 
+/**
+ * Add new Link
+ * @param {*} req 
+ * @param {*} res 
+ * @returns { Promise }
+ * @constructor
+ */
 const addLink = async (req, res) => {
   try {
 
@@ -127,6 +134,13 @@ const addLink = async (req, res) => {
   }
 };
 
+/**
+ * Get all products for user
+ * @param {*} req 
+ * @param {*} res 
+ * @returns { Promise }
+ * @constructor
+ */
 const getProducts = async (req, res) => {
   try {
 
@@ -154,7 +168,36 @@ const getProducts = async (req, res) => {
   }
 }
 
+/**
+ * Delete choice
+ * @param {*} req 
+ * @param {*} res 
+ * @returns { Promise }
+ * @constructor
+ */
+const deleteProduct = async (req, res) => {
+
+  try {
+
+    const { user, params } = req;
+
+    await Choice.destroy({
+      where: {
+        user_id: user.id,
+        product_id: params.id,
+      }
+    });
+
+    return responseHelper(res, "CHOICE204");
+
+  } catch (ex) {
+    console.log(ex.message);
+    return responseHelper(res, "SERVER500", ex);
+  }
+};
+
 module.exports = {
   addLink,
   getProducts,
+  deleteProduct,
 };

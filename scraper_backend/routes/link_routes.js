@@ -10,4 +10,7 @@ router.post("/create", authMiddleware, link_controller.addLink);
 // Get requests
 router.get("/list", authMiddleware, link_controller.getProducts);
 
+// Delete
+router.delete("/delete/:id", authMiddleware, link_controller.deleteProduct);
+
 module.exports = router;
