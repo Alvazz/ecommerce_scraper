@@ -67,7 +67,7 @@ func task() {
 
 }
 
-func RunTask() {
+func RunCronTask() {
 	fmt.Println("\nRunning CRON Server")
 	gocron.Every(5).Second().Do(task)
 	<-gocron.Start()

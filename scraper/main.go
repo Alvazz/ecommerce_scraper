@@ -19,10 +19,14 @@ func main() {
 
 	r := routes.GoRoutes()
 
-	if os.Getenv("ENV") == "DEV" {
-		go tasks.RunTask()
-	} else {
-		fmt.Println("Not running Background Tasks")
+	// Handle task running
+	switch os.Getenv("ENV") {
+	case "DEV":
+		go tasks.RunCronTask()
+	case "LOCAL":
+		fmt.Println("Not running Tasks in LOCAL env")
+	default:
+		fmt.Println("Not running Background Tasks in other env")
 	}
 
 	port := os.Getenv("PORT")
