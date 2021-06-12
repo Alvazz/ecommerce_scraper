@@ -49,3 +49,5 @@ _testmain.go
 main
 
 .env
+
+*.out
