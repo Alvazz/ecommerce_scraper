@@ -42,9 +42,9 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    'vue-sweetalert2/nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -53,7 +53,21 @@ export default {
   },
 
   auth: {
-
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'auth/login', method: 'post', propertyName: 'data.token' },
+          logout: false,
+          user: { url: 'auth/user', method: 'get', propertyName: 'data.user' },
+        },
+        tokenRequired: true,
+        tokenType: null,
+      }
+    },
+    redirect: {
+      logout: '/login',
+      login: '/login'
+    },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

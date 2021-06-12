@@ -22,6 +22,7 @@
                   label="Password"
                   required
                   color="error"
+                  type="password"
                 ></v-text-field>
 
                 <v-btn
@@ -67,15 +68,35 @@ export default {
       loading: false,
 
       loginModel: {
-        email: "",
-        password: "",
+        email: "sapt1@yopmail.com",
+        password: "ubuntu",
       },
     };
   },
 
   methods: {
-    onLogin() {
+    async onLogin() {
       console.log(this.loginModel);
+      try {
+        await this.$auth.loginWith("local", {
+          data: this.loginModel,
+        });
+      } catch (ex) {
+        const { data } = ex.response;
+        if (data.status && data.status.message) {
+          this.$swal.fire({
+            icon: "error",
+            text: data.status.message,
+            showConfirmButton: false,
+          });
+        } else {
+          this.$swal.fire({
+            icon: "error",
+            text: data,
+            showConfirmButton: false,
+          });
+        }
+      }
     },
 
     forgotPassword() {},

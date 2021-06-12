@@ -14,7 +14,7 @@ export default {
   name: "Navbar",
   methods: {
     logoutUser() {
-      
+      this.$auth.logout();
     },
   },
 };

@@ -6,6 +6,17 @@
 
 <script>
 export default {
-  name: "unAuth"
-}
+  name: "unAuth",
+  created: function () {
+    this.handleLogin();
+  },
+
+  methods: {
+    handleLogin: function () {
+      if (this.$auth.$state.loggedIn) {
+        return this.$router.push({ path: "/" });
+      }
+    },
+  },
+};
 </script>

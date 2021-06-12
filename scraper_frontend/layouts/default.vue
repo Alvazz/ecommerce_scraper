@@ -10,13 +10,21 @@
 import Navbar from "../components/navbar.vue";
 
 export default {
-
   components: {
     Navbar,
   },
 
-  data () {
-    
-  }
+  created: function () {
+    this.handleLogin();
+  },
+
+  methods: {
+    handleLogin: function () {
+      if (!this.$auth.$state.loggedIn) {
+        return this.$router.push({ path: "/login" });
+      }
+    },
+  },
+
 }
 </script>
