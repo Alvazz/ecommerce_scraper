@@ -6,7 +6,9 @@
 
 <script>
 export default {
+  
   name: "unAuth",
+
   created: function () {
     this.handleLogin();
   },
@@ -18,5 +20,6 @@ export default {
       }
     },
   },
+  
 };
 </script>

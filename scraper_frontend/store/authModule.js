@@ -10,10 +10,14 @@ module.exports = {
 
   actions: {
 
+    registerUser() {
+
+    },
+
   },
 
   mutations: {
-
+    
   },
 
 };

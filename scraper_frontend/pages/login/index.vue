@@ -75,8 +75,8 @@ export default {
   },
 
   methods: {
+    
     async onLogin() {
-      console.log(this.loginModel);
       try {
         await this.$auth.loginWith("local", {
           data: this.loginModel,
@@ -105,5 +105,6 @@ export default {
       this.$router.push({ path: "/register" });
     },
   },
+
 };
 </script>
