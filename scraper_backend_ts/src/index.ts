@@ -19,7 +19,7 @@ const init = async () => {
 
   const swaggerOptions = {
     info: {
-      title: 'Test API Documentation',
+      title: 'Scraper API Documentation',
       version: "1.0.0.0",
     },
   };
