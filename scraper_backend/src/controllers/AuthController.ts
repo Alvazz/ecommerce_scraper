@@ -1,48 +1,69 @@
-import { Request, ResponseToolkit } from "@hapi/hapi";
-import { getRepository } from "typeorm";
+import { Request, ResponseObject, ResponseToolkit } from "@hapi/hapi";
 
-import { User } from "../entity/User";
 import { ResponseHelper } from "../helpers/ResponseHelper";
-import { Login, Register, UserModel } from "../interfaces";
+import { UserHelper } from "../helpers/UserHelper";
+import { ILogin, IRegister, IUserModel } from "../interfaces";
+import { UserService } from "../services/UserService";
 
-const LoginController = async (req: Request, h: ResponseToolkit) => {
-  try {
+export class AuthController {
 
-    const UserManager = getRepository(User);
-    const login: Login = req.payload as Login;
+  private responseHelper: ResponseHelper;
+  private userService: UserService;
+  private userHelper: UserHelper;
 
-    const userExists: UserModel = await UserManager.findOne({ where: { email: login.email }, select: ['id'] });
-    if (!userExists) {
-      return ResponseHelper(h, "USER404");
-    }
-
-    return ResponseHelper(h, "LOGIN200");
-
-  } catch (ex) {
-    return ResponseHelper(h, "SERVER500");
+  constructor() {
+    this.responseHelper = new ResponseHelper();
+    this.userService = new UserService();
+    this.userHelper = new UserHelper();
   }
-};
 
-const RegisterController = async (req: Request, h: ResponseToolkit) => {
-  try {
+  public loginController = async (req: Request, h: ResponseToolkit): Promise<ResponseObject> => {
+    try {
 
-    const UserManager = getRepository(User);
-    const register: Register = req.payload as Register;
+      const login: ILogin = req.payload as ILogin;
+      const userExists: IUserModel = await this.userService.findUserByEmail(
+        login.email, 
+        ['id', 'email', 'password', 'is_active']
+      );
 
-    // Check if user exists
-    const userExists: UserModel = await UserManager.findOne({ where: { email: register.email }, select: ['id', 'password'] });
-    if (userExists) {
-      return ResponseHelper(h, "USER400");
+      if (!userExists) {
+        return this.responseHelper.error(h, "USER404");
+      }
+
+      if (userExists && !userExists.is_active) {
+        return this.responseHelper.error(h, "USER400");
+      }
+
+      if (!this.userHelper.comparePassword(login.password, userExists.password)) {
+        return this.responseHelper.error(h, "LOGIN403");
+      }
+
+      // create a token for the user.
+      const token = this.userHelper.createToken({ id: userExists.id } as IUserModel);
+
+      return this.responseHelper.success(h, "LOGIN200", { token });
+
+    } catch (ex) {
+      return this.responseHelper.error(h, "SERVER500", ex);
     }
-
-    return ResponseHelper(h, "USER200");
-
-  } catch (ex) {
-    return ResponseHelper(h, "SERVER500");
   }
-};
 
-export {
-  LoginController,
-  RegisterController,
+  public registerController = async (req: Request, h: ResponseToolkit): Promise<ResponseObject> => {
+    try {
+        
+      const register: IRegister = req.payload as IRegister;
+      const userExists: IUserModel = await this.userService.findUserByEmail(register.email, ['id', 'email', 'password']);
+      if (userExists) {
+        return this.responseHelper.success(h, "USER400");
+      }
+
+      // Hashpassword for the user.
+      await this.userService.createUser(register);
+
+      return this.responseHelper.success(h, "USER200");
+
+    } catch (ex) {
+      return this.responseHelper.error(h, "SERVER500");
+    }
+  }
 };

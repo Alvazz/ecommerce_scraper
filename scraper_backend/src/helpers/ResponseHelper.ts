@@ -1,18 +1,48 @@
-import { ResponseToolkit } from "@hapi/hapi";
+import { ResponseObject, ResponseToolkit } from "@hapi/hapi";
+import { log } from "console";
 
 import { StatusCode } from "../config";
+import { IStatus } from "../interfaces";
 
-export const ResponseHelper = (h: ResponseToolkit, code: string, data?: Object | any) => {
+export class ResponseHelper {
 
-  const statusObject = StatusCode[code];
+  statusCode: typeof StatusCode | any;
 
-  const responseObject: Object | any = {};
-  responseObject.status = statusObject;
-
-  if (data) {
-    responseObject.data = data;
+  constructor() {
+    this.statusCode = StatusCode;
   }
 
-  return h.response(responseObject).code(statusObject.status_code);
+  public success = (h: ResponseToolkit, code: string, data?: Object | any): ResponseObject => {
+
+    const status: IStatus = this.statusCode[code];
+    const response: Object | any = {};
+
+    response.status = status;
+    if (data) {
+      response.data = data;
+    }
+
+    return h.response(response).code(status.status_code);
+
+  };
+
+  public error = (h: ResponseToolkit, code: string, error?: Object | any): ResponseObject => {
+
+    const status: IStatus = this.statusCode[code];
+    const response: Object | any = {};
+
+    response.status = status;
+    console.log(response.message);
+    
+    if (error) {
+      console.log(error.message);
+    }
+
+    log("Error");
+    log(error);
+   
+    return h.response(response).code(status.status_code);
+  
+  };
 
 };

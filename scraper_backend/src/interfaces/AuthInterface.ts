@@ -1,19 +1,20 @@
-export interface Login {
+export interface ILogin {
   email: string;
   password: string;
 };
 
-export interface Register {
+export interface IRegister {
   first_name: string;
   last_name: string;
   email: string;
   password: string;
 };
 
-export interface UserModel {
+export interface IUserModel {
   id: number;
   first_name: string;
   last_name: string;
   email: string;
   password: string;
+  is_active: boolean;
 };

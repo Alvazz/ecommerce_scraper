@@ -4,7 +4,7 @@ import * as Inert from "@hapi/inert";
 import * as Vision from "@hapi/vision";
 import * as HapiSwagger from 'hapi-swagger';
 
-import { DBConnection } from "./entity";
+import DBManager from "./entity";
 import { routes } from "./routes";
 import { Environment } from "./config";
 
@@ -15,7 +15,7 @@ const server: Server = new Server({
 
 const init = async () => {
 
-  await DBConnection();
+  await new DBManager().dbInit();
 
   const swaggerOptions = {
     info: {

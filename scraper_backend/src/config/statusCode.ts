@@ -14,12 +14,24 @@ export const StatusCode: Object | any = {
 
   "USER400": {
     "message": "User already exists",
-    "status_code": 404,
+    "status_code": 400,
+    "success": false,
+  },
+
+  "USER401": {
+    "message": "User not verified. Please verify user",
+    "status_code": 401,
+    "success": false,
+  },
+
+  "LOGIN403": {
+    "message": "User password invalid",
+    "status_code": 403,
     "success": false,
   },
 
   "USER404": {
-    "message": "User does not exists",
+    "message": "User not found",
     "status_code": 404,
     "success": false,
   },

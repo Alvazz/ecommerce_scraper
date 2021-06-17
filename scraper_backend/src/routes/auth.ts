@@ -1,14 +1,17 @@
 import { Server } from "@hapi/hapi";
-
 import { AuthController } from "../controllers";
 import { LoginValidation, RegisterValidation } from "../validations";
 
-export const AuthRoutes = { 
+export class AuthRoutes {
 
-  name: "auth",
-  register: (server: Server) => {
+  authController: AuthController;
+  routes: Array<any>;
 
-    const routes: Array<any> = [
+  constructor() {
+
+    this.authController = new AuthController();
+
+    this.routes = [
       {
         method: "POST",
         path: "/auth/login",
@@ -16,7 +19,7 @@ export const AuthRoutes = {
           auth: false,
           description: "User Login",
           tags: ["api"],
-          handler: AuthController.LoginController,
+          handler: this.authController.loginController,
           validate: LoginValidation,
         }
       },
@@ -27,13 +30,19 @@ export const AuthRoutes = {
           auth: false,
           description: "User Registration",
           tags: ["api"],
-          handler: AuthController.RegisterController,
+          handler: this.authController.registerController,
           validate: RegisterValidation,
         }
       }
     ];
 
-    server.route(routes);
+  }
 
-  },
+  public getRoutes(): Object | any {
+    return {
+      name: "routes",
+      register: (server: Server) => { server.route(this.routes) },
+    }
+  }
+
 };
