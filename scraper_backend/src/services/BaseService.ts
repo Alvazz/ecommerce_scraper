@@ -4,8 +4,8 @@ import DBManager from "../entity";
 
 export class BaseService {
 
-  public entityRepository: Repository<any>;
-  public dbManager: DBManager;
+  protected entityRepository: Repository<any>;
+  protected dbManager: DBManager;
 
   constructor(entity: any) {
     (async () => { await this.serviceInit(entity) })();

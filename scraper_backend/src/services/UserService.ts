@@ -6,7 +6,7 @@ import { UserHelper } from "../helpers/UserHelper";
 
 export class UserService extends BaseService {
 
-  userHelper: UserHelper;
+  private userHelper: UserHelper;
 
   constructor() {
     super(User);

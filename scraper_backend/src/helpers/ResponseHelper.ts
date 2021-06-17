@@ -6,7 +6,7 @@ import { IStatus } from "../interfaces";
 
 export class ResponseHelper {
 
-  statusCode: typeof StatusCode | any;
+  private statusCode: typeof StatusCode | any;
 
   constructor() {
     this.statusCode = StatusCode;

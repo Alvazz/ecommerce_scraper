@@ -4,8 +4,8 @@ import { LoginValidation, RegisterValidation } from "../validations";
 
 export class AuthRoutes {
 
-  authController: AuthController;
-  routes: Array<any>;
+  private authController: AuthController;
+  private routes: Array<any>;
 
   constructor() {
 
