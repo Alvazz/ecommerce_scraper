@@ -7,7 +7,7 @@ import { Environment } from "../config";
 export class UserHelper {
 
   public hashPassword(password): string {
-    const salt = bcryptjs.genSaltSync(10); // salt
+    const salt: string = bcryptjs.genSaltSync(10) as string; // salt
     return bcryptjs.hashSync(password, salt);
   }
 
