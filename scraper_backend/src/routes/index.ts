@@ -1,4 +1,4 @@
-import { AuthRoutes } from "./auth";
+import { AuthRoutes } from "./Auth";
 
 const authRoutes: Object | any = new AuthRoutes().getRoutes();
 
